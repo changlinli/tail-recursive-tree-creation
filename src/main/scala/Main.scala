@@ -104,6 +104,10 @@ object FirstSolution {
       }
   }
 
+  /**
+    * This looks recursive, but it's not actually recursive because of the
+    * [[Trampoline.suspend]] call.
+    */
   def generateTreeTrampolined[A](root: A, edges: Map[A, List[A]]): Trampoline[Tree[A]] = {
     val childrenTrampolined = edges.get(root).toList.flatten.map{
       child => Trampoline.suspend(generateTreeTrampolined(child, edges))
